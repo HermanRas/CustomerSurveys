@@ -41,14 +41,8 @@
 
 
 ## ChangeLog
-- DONE 2020-02-14 Fixed Breakdown Hours
-- DONE 2020-02-14 Merged Workflow to 2 pages with client side filters
-- DONE 2020-02-17 added Start date to summary page and added default sort by start date DESC
-- DONE 2020-02-17 added breakdown hours to view all page
-- DONE 2020-02-17 added breakdown hours to view all page
 
 ## To-Do Induction
-- Update usernames with access to maintenance tables
 
 ## Look-At-Implementing
 - NONE
