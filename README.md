@@ -1,24 +1,24 @@
 # Mining Delays
-<img src="https://github.com/HermanRasICTSurvey/blob/master/img/Logo.jpg" alt="#PetraLogo">
+<img src="https://github.com/HermanRas/CustomerSurveys/blob/master/img/Logo.jpg" alt="#PetraLogo">
 
 ## Issues Tracking
 ### Issues Tracking: Total Logged !
- - [![Open Issues](https://img.shields.io/github/issues/HermanRasICTSurvey.svg)](https://github.com/HermanRasICTSurvey/issues)
-[!["Closed Issues"](https://img.shields.io/github/issues-closed/HermanRasICTSurvey.svg?style=flat-square)](https://github.com/HermanRasICTSurvey/issues)
+ - [![Open Issues](https://img.shields.io/github/issues/HermanRas/CustomerSurveys.svg)](https://github.com/HermanRas/CustomerSurveys/issues)
+[!["Closed Issues"](https://img.shields.io/github/issues-closed/HermanRas/CustomerSurveys.svg?style=flat-square)](https://github.com/HermanRas/CustomerSurveys/issues)
 ### Issues Tracking: by type
- - [!["To Do"](https://img.shields.io/github/issues/HermanRasICTSurvey/help%20wanted.svg)](https://github.com/HermanRasICTSurvey/labels/help%20wanted)
-[!["Look At"](https://img.shields.io/github/issues/HermanRasICTSurvey/enhancement.svg)](https://github.com/HermanRasICTSurvey/labels/enhancement)
-[!["Open Bug"](https://img.shields.io/github/issues/HermanRasICTSurvey/bug.svg)](https://github.com/HermanRasICTSurvey/labels/bug)
-[!["Confirm Scope"](https://img.shields.io/github/issues/HermanRasICTSurvey/question.svg)](https://github.com/HermanRasICTSurvey/labels/question)
+ - [!["To Do"](https://img.shields.io/github/issues/HermanRas/CustomerSurveys/help%20wanted.svg)](https://github.com/HermanRas/CustomerSurveys/labels/help%20wanted)
+[!["Look At"](https://img.shields.io/github/issues/HermanRas/CustomerSurveys/enhancement.svg)](https://github.com/HermanRas/CustomerSurveys/labels/enhancement)
+[!["Open Bug"](https://img.shields.io/github/issues/HermanRas/CustomerSurveys/bug.svg)](https://github.com/HermanRas/CustomerSurveys/labels/bug)
+[!["Confirm Scope"](https://img.shields.io/github/issues/HermanRas/CustomerSurveys/question.svg)](https://github.com/HermanRas/CustomerSurveys/labels/question)
 
 ### Latest Release
- - [!["Latest Release"](https://img.shields.io/github/release/HermanRasICTSurvey.svg)](https://github.com/HermanRasICTSurvey/releases)
-[!["Release Date"](https://img.shields.io/github/release-date/HermanRasICTSurvey.svg)](https://github.com/HermanRasICTSurvey/releases)
+ - [!["Latest Release"](https://img.shields.io/github/release/HermanRas/CustomerSurveys.svg)](https://github.com/HermanRas/CustomerSurveys/releases)
+[!["Release Date"](https://img.shields.io/github/release-date/HermanRas/CustomerSurveys.svg)](https://github.com/HermanRas/CustomerSurveys/releases)
 
 ### Latest Dev Build
- - [!["Latest Release"](https://img.shields.io/github/release-pre/HermanRasICTSurvey.svg)](https://github.com/HermanRasICTSurvey/releases)
-[!["Release Date"](https://img.shields.io/github/release-date-pre/HermanRasICTSurvey.svg)](https://github.com/HermanRasICTSurvey/releases)
-[!["Last Updated"](https://img.shields.io/github/last-commit/HermanRasICTSurvey.svg)](https://github.com/HermanRasICTSurvey/releases)
+ - [!["Latest Release"](https://img.shields.io/github/release-pre/HermanRas/CustomerSurveys.svg)](https://github.com/HermanRas/CustomerSurveys/releases)
+[!["Release Date"](https://img.shields.io/github/release-date-pre/HermanRas/CustomerSurveys.svg)](https://github.com/HermanRas/CustomerSurveys/releases)
+[!["Last Updated"](https://img.shields.io/github/last-commit/HermanRas/CustomerSurveys.svg)](https://github.com/HermanRas/CustomerSurveys/releases)
 
 ### Requirements
  - [!["PHP 7.2"](https://img.shields.io/badge/PHP-7.2%5E-blue.svg)](https://www.php.net/)(php7.2-xml, php7.2-mbstring, php7.2-zip)

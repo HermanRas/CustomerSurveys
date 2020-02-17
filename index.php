@@ -1,24 +1,40 @@
 <?php
 
-if( isset($_POST[' '])){
- var_dump($_POST);
+if( isset($_POST['Question'])){
+
+$UserHash = md5($_SERVER['AUTH_USER']);
+$Survey_id = $_GET['id'];
+
+foreach ($_POST['Question'] as $key => $value) {
+         $sql = "INSERT INTO   tSurveyResult
+                    (Survey_id,
+                    Question_id,
+                    Result,
+                    UserHash) 
+                VALUES
+                    ('$Survey_id',
+                    '$key',
+                    '$value',
+                    '$UserHash');";
+                    
+        $sqlargs = array();
+        require_once 'config/db_query.php'; 
+        $Questions =  sqlQuery($sql,$sqlargs);
+}
+     echo "<script>window.location.href='thanks.php'</script>";
     die;
 }
-
-
 
 $id = 0;
 if (isset($_GET['id'])){
     $id = $_GET['id'];
-    echo $id;
 
-        //SQL Equipment
-        $sql = 'Select
+        //SQL get Survey Data
+        $sql = 'SELECT
                 SM.SurveyName,
                 SQ.Question,
-                QT.QuestionType,
-                SQ.ActiveIndicator,
-                SM.ActiveIndicator As ActiveIndicator1
+                SQ.id,
+                QT.QuestionType
                 From
                 tSurveyMain As SM Inner Join
                 tSurveyQuestions As SQ On SQ.Survey_id = SM.Survey_id Inner Join
@@ -30,6 +46,18 @@ if (isset($_GET['id'])){
         $sqlargs = array('id' => $id);
         require_once 'config/db_query.php'; 
         $Questions =  sqlQuery($sql,$sqlargs);
+
+        // check user completed survey
+        $sql = 'SELECT * from [tSurveyResult]
+                WHERE Survey_id = :id ;';
+        $sqlargs = array('id' => $id);
+        require_once 'config/db_query.php'; 
+        $UserSurveyCompleted =  sqlQuery($sql,$sqlargs);
+        
+        if($UserSurveyCompleted[1]> 0 ){
+            echo "<script>window.location.href='thanks.php'</script>";
+            die;
+        };
 }else{
     echo "Please contact ICT, the survey link is not valid !";
     die;
@@ -82,18 +110,18 @@ if (isset($_GET['id'])){
                     <form method="POST">
 
                         <?php 
-                        $i = 0;
+
                         foreach ($Questions[0] as $Rec) {
 
                             if( strpos($Rec['QuestionType'],'|',0) > 0 ){
                                 $Options = explode('|',$Rec['QuestionType']);
                                 
-                                echo '<div class="form-row"><div class="form-group col-md-12"><label for="Question'.$i.'">'.$Rec['Question'].'</label><br>';
+                                echo '<div class="form-row"><div class="form-group col-md-12"><label for="Question['.$Rec['id'].']">'.$Rec['Question'].'</label><br>';
                                 $j = 0;
                                 foreach ($Options as $q) {
                                     echo '<div class="form-check form-check-inline">
-                                            <input type="radio" class="form-check-input" id="Question'.$i.'['.$j.']"  name="Question'.$i.'" required>
-                                            <label class="form-check-label" for="Question'.$i.'['.$j.']">'.$q.'</label>
+                                            <input type="radio" class="form-check-input" id="Question['.$Rec['id'].']['.$j.']"  name="Question['.$Rec['id'].']" value="'.$q.'" required>
+                                            <label class="form-check-label" for="Question['.$Rec['id'].']['.$j.']">'.$q.'</label>
                                          </div>';
                                          $j++;
                                         }
@@ -103,8 +131,8 @@ if (isset($_GET['id'])){
                                 echo
                                     '<div class="form-row">
                                         <div class="form-group col-md-12">
-                                            <label for="Question'.$i.'">'.$Rec['Question'].'</label>
-                                            <input type="text" class="form-control" id="Question'.$i.'" placeholder="Type here..." name="Question'.$i.'">
+                                            <label for="Question['.$Rec['id'].']">'.$Rec['Question'].'</label>
+                                            <input type="text" class="form-control" id="Question['.$Rec['id'].']" placeholder="Type here..." name="Question['.$Rec['id'].']">
                                         </div>
                                     </div>
                                     <hr>';
@@ -112,18 +140,17 @@ if (isset($_GET['id'])){
                                 echo
                                     '<div class="form-row">
                                         <div class="form-group col-md-12">
-                                            <label for="Question'.$i.'">'.$Rec['Question'].'</label>
-                                            <input type="number" class="form-control" id="Question'.$i.'" placeholder="Type here..." name="Question'.$i.'" required>
+                                            <label for="Question['.$Rec['id'].']">'.$Rec['Question'].'</label>
+                                            <input type="number" class="form-control" id="Question['.$Rec['id'].']" placeholder="Type here..." name="Question['.$Rec['id'].']" required>
                                         </div>
                                     </div>
                                     <hr>';
                                 }
                             }
-                            $i++;
                         }?>
                         <div class="row my-3">
                             <div class="col-12">
-                                <button class="btn btn-outline-success btn-lg form-control" name="Delay">Save</button>
+                                <button type="submit" class="btn btn-outline-success btn-lg form-control">Save</button>
                             </div>
                         </div>
                     </form>
