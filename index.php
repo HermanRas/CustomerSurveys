@@ -28,7 +28,7 @@ foreach ($_POST['Question'] as $key => $value) {
 $id = 0;
 if (isset($_GET['id'])){
     $id = $_GET['id'];
-
+    $UserHash = md5($_SERVER['AUTH_USER']);
         //SQL get Survey Data
         $sql = 'SELECT
                 SM.SurveyName,
@@ -49,8 +49,9 @@ if (isset($_GET['id'])){
 
         // check user completed survey
         $sql = 'SELECT * from [tSurveyResult]
-                WHERE Survey_id = :id ;';
-        $sqlargs = array('id' => $id);
+                WHERE Survey_id = :id AND 
+                      UserHash = :UserHash;';
+        $sqlargs = array('id' => $id,'UserHash' => $UserHash);
         require_once 'config/db_query.php'; 
         $UserSurveyCompleted =  sqlQuery($sql,$sqlargs);
         
@@ -89,12 +90,12 @@ if (isset($_GET['id'])){
 
 <body class="bg-primary">
     <!-- Page Start -->
-    <div class="pt-5 container bg-white rounded">
+    <div class="pt-1 container bg-white rounded">
 
         <!-- NAV START -->
         <nav class="navbar navbar-dark bg-dark rounded">
             <a class="navbar-brand" href="#">
-                <img src="img/icon.jpg" height="100px" class="d-inline-block align-center bg-white rounded" alt="Logo">
+                <img src="img/icon.jpg" height="60px" class="d-inline-block align-center bg-white rounded" alt="Logo">
                 <?php echo $Questions[0][0]['SurveyName'] ?>
             </a>
         </nav>
@@ -103,8 +104,8 @@ if (isset($_GET['id'])){
         <section>
             <!-- form start-->
             <div class="card">
-                <div class="card-header bg-success">
-                    <h2> Questions</h2>
+                <div class="p-1 card-header bg-success">
+                    <h2 class="m-0 p-0"> Questions</h2>
                 </div>
                 <div class="card-body">
                     <form method="POST">
