@@ -39,9 +39,10 @@ if($UserAdmin[1] < 1 ){
 
 <body class="bg-primary">
     <?php
-        $sql = 'SELECT * from [CustomerSurveys].[dbo].[tSurveyMain]
-                WHERE OwnerUserName = :User;';
-        $sqlargs = array('User'=>$User);
+        $sid = $_GET['sid'];
+        $sql = 'SELECT * from [CustomerSurveys].[dbo].[tSurveyQuestions]
+                WHERE Survey_id = :sid;';
+        $sqlargs = array('sid'=>$sid);
         require_once 'config/db_query.php'; 
         $SurveyTb =  sqlQuery($sql,$sqlargs);
     ?>
@@ -53,7 +54,7 @@ if($UserAdmin[1] < 1 ){
         <nav class="navbar navbar-dark bg-dark rounded">
             <a class="navbar-brand" href="#">
                 <img src="img/icon.jpg" height="60px" class="d-inline-block align-center bg-white rounded" alt="Logo">
-                Client Survey Admin
+                Client Survey Questions
             </a>
         </nav>
         <!-- NAV END -->
@@ -62,7 +63,7 @@ if($UserAdmin[1] < 1 ){
             <!-- form start-->
             <div class="card">
                 <div class="p-1 card-header bg-success">
-                    <h2 class="m-0 p-0 text-white"> Update a Survey</h2>
+                    <h2 class="m-0 p-0 text-white"> Update Survey Questions</h2>
                 </div>
                 <div class="card-body">
                     <form method="GET" action="admin_new.php">
@@ -85,18 +86,12 @@ if($UserAdmin[1] < 1 ){
                                         <div class="input-group-text <?php echo $status?>"><?php echo $active; ?></div>
                                     </div>
                                     <input type=" text" class="form-control" id="inlineFormInputGroup"
-                                        value="<?php echo $Rec['SurveyName'] ;?>" readonly>
+                                        value="<?php echo $Rec['Question'] ;?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group col-md-2">
-                                <a class="form-control btn btn-info"
-                                    href="admin_questions.php?sid=<?php echo $Rec['Survey_id'] ;?>">
-                                    Questions
-                                </a>
-                            </div>
-                            <div class="form-group col-md-2">
                                 <a class="form-control btn btn-primary"
-                                    href="admin_action.php?sid=<?php echo $Rec['Survey_id'] ;?>">
+                                    href="admin_action.php?qid=<?php echo $Rec['id'] ;?>">
                                     Toggle
                                 </a>
                             </div>
