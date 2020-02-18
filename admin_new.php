@@ -1,27 +1,49 @@
 <?php
 if( isset($_POST['Question'])){
+$UserHash = md5($_SERVER['AUTH_USER']);
+$User= $_SERVER['AUTH_USER'];
+$SurveyName = $_POST['SurveyName'];
 
-// $UserHash = md5($_SERVER['AUTH_USER']);
-// $Survey_id = $_GET['id'];
+// Add survey to main
+$sql = "INSERT INTO tSurveyMain
+        (SurveyName,
+        ActiveIndicator,
+        OwnerUserName) 
+        VALUES
+        ('$SurveyName',
+        '-1',
+        '$User');";
+$sqlargs = array();
+require_once 'config/db_query.php'; 
+sqlQuery($sql,$sqlargs);
 
-// foreach ($_POST['Question'] as $key => $value) {
-//          $sql = "INSERT INTO   tSurveyResult
-//                     (Survey_id,
-//                     Question_id,
-//                     Result,
-//                     UserHash) 
-//                 VALUES
-//                     ('$Survey_id',
-//                     '$key',
-//                     '$value',
-//                     '$UserHash');";
+//get survey ID 
+$sql = "SELECT TOP(1) Survey_id from tSurveyMain
+        ORDER BY Survey_id DESC;";
+$sqlargs = array();
+require_once 'config/db_query.php'; 
+$SurveyTb = sqlQuery($sql,$sqlargs);
+$Survey_id = $SurveyTb[0][0]['Survey_id'];
+
+foreach ($_POST['Question'] as $key => $value) {
+    $Question = $value;
+    $Type = $_POST['Type'][$key];
+    $sql = "INSERT INTO  tSurveyQuestions
+                (Survey_id,
+                QuestionType_id,
+                Question,
+                ActiveIndicator) 
+            VALUES
+                ('$Survey_id',
+                '$Type',
+                '$Question',
+                '-1');";
                     
-//         $sqlargs = array();
-//         require_once 'config/db_query.php'; 
-//         $Questions =  sqlQuery($sql,$sqlargs);
-//         }
-//      echo "<script>window.location.href='thanks.php'</script>";
-    var_dump($_POST);
+        $sqlargs = array();
+        require_once 'config/db_query.php'; 
+        $Questions =  sqlQuery($sql,$sqlargs);
+        }
+    echo "<script>window.location.href='admin_link.php?id=$Survey_id'</script>";
     die;
 }
 
