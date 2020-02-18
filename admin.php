@@ -1,31 +1,4 @@
 <?php
-if( isset($_POST['Question'])){
-
-// $UserHash = md5($_SERVER['AUTH_USER']);
-// $Survey_id = $_GET['id'];
-
-// foreach ($_POST['Question'] as $key => $value) {
-//          $sql = "INSERT INTO   tSurveyResult
-//                     (Survey_id,
-//                     Question_id,
-//                     Result,
-//                     UserHash) 
-//                 VALUES
-//                     ('$Survey_id',
-//                     '$key',
-//                     '$value',
-//                     '$UserHash');";
-                    
-//         $sqlargs = array();
-//         require_once 'config/db_query.php'; 
-//         $Questions =  sqlQuery($sql,$sqlargs);
-//         }
-//      echo "<script>window.location.href='thanks.php'</script>";
-    var_dump($_POST);
-    die;
-}
-
-
 // check user is survey admin
 $User = $_SERVER['AUTH_USER'];
 
@@ -66,12 +39,13 @@ if($UserAdmin[1] < 1 ){
 
 <body class="bg-primary">
     <?php
-        $sql = 'SELECT * from [tQuestionType];';
-        $sqlargs = array('');
+        $sql = 'SELECT * from [CustomerSurveys].[dbo].[tSurveyMain]
+                WHERE OwnerUserName = :User;';
+        $sqlargs = array('User'=>$User);
         require_once 'config/db_query.php'; 
-        $QType =  sqlQuery($sql,$sqlargs);
-        echo "<script> let QType = [" . json_encode($QType[0]) . "];</script>";
+        $SurveyTb =  sqlQuery($sql,$sqlargs);
     ?>
+
     <!-- Page Start -->
     <div class="pt-1 container bg-white rounded">
 
@@ -79,7 +53,7 @@ if($UserAdmin[1] < 1 ){
         <nav class="navbar navbar-dark bg-dark rounded">
             <a class="navbar-brand" href="#">
                 <img src="img/icon.jpg" height="60px" class="d-inline-block align-center bg-white rounded" alt="Logo">
-                Client Survey Builder
+                Client Survey Admin
             </a>
         </nav>
         <!-- NAV END -->
@@ -88,37 +62,48 @@ if($UserAdmin[1] < 1 ){
             <!-- form start-->
             <div class="card">
                 <div class="p-1 card-header bg-success">
-                    <h2 class="m-0 p-0"> Build a Survey</h2>
+                    <h2 class="m-0 p-0 text-white"> Update a Survey</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST">
+                    <form method="GET" action="admin_new.php">
+                        <?php
+                        foreach ($SurveyTb[0] as $Rec) {
+                            if($Rec['ActiveIndicator']== -1){
+                                $active = "Active";
+                                $status = "bg-success text-white";
+                            }else{
+                                $active = "Deactivated";
+                                $status = "bg-secondary text-white";
+                            }
 
+                        ?>
+                        <!-- Survey Start -->
                         <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="SurveyName">SurveyName:</label>
-                                <input type="text" maxlength="250" class="form-control" id="SurveyName"
-                                    name="SurveyName" Placeholder="Type the survey name here" required>
+                            <div class="form-group col-md-10">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text <?php echo $status?>"><?php echo $active; ?></div>
+                                    </div>
+                                    <input type=" text" class="form-control" id="inlineFormInputGroup"
+                                        value="<?php echo $Rec['SurveyName'] ;?>" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <a class="form-control btn btn-primary"
+                                    href="admin_action.php?sid=<?php echo $Rec['Survey_id'] ;?>">
+                                    Toggle
+                                </a>
                             </div>
                         </div>
-                        <p class="small text-danger">Question number are for visual aid only ! </p>
+                        <!-- Survey End -->
+                        <?php
+                            }
+                        ?>
                         <hr>
-                        <div id="QHolder">
-                        </div>
-
-                        <div class="row my-3">
-                            <div class="col-6">
-                                <button type="button" class="btn btn-outline-primary btn-lg form-control"
-                                    onclick="addNew();">Add
-                                    Question</button>
-                            </div>
-                            <div class="col-6">
-                                <button type="button" class="btn btn-outline-info btn-lg form-control">Add
-                                    Title</button>
-                            </div>
-                        </div>
                         <div class="row my-3">
                             <div class="col-12">
-                                <button type="submit" class="btn btn-outline-success btn-lg form-control">Save</button>
+                                <button class="btn btn-outline-success btn-lg form-control">Add
+                                    New</button>
                             </div>
                         </div>
                     </form>
@@ -136,10 +121,6 @@ if($UserAdmin[1] < 1 ){
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <!-- end of Bootstrap JS -->
-
-    <!-- Page Level JS -->
-    <script src="js/questions.js">
-    </script>
 
 </body>
 

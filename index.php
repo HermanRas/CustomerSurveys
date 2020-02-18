@@ -34,20 +34,25 @@ if (isset($_GET['id'])){
                 SM.SurveyName,
                 SQ.Question,
                 SQ.id,
-                QT.QuestionType
+                QT.QuestionType,
+                SM.ActiveIndicator
                 From
                 tSurveyMain As SM Inner Join
                 tSurveyQuestions As SQ On SQ.Survey_id = SM.Survey_id Inner Join
                 tQuestionType As QT On QT.QuestionType_id = SQ.QuestionType_id
                 Where
-                ((SM.ActiveIndicator <> 0) Or
-                (SQ.ActiveIndicator <> 0)) And
-                SM.Survey_id = :id ;';
+                (SQ.ActiveIndicator <> 0) And
+                (SM.Survey_id = :id);';
         $sqlargs = array('id' => $id);
         require_once 'config/db_query.php'; 
         $Questions =  sqlQuery($sql,$sqlargs);
 
-        // check user completed survey
+        if($Questions[0][0]['ActiveIndicator'] === "0" ){
+            echo "<script>window.location.href='closed.php'</script>";
+            die;
+        }
+
+        //Check user completed survey
         $sql = 'SELECT * from [tSurveyResult]
                 WHERE Survey_id = :id AND 
                       UserHash = :UserHash;';
@@ -59,6 +64,10 @@ if (isset($_GET['id'])){
             echo "<script>window.location.href='thanks.php'</script>";
             die;
         };
+
+
+
+
 }else{
     echo "Please contact ICT, the survey link is not valid !";
     die;
@@ -105,7 +114,7 @@ if (isset($_GET['id'])){
             <!-- form start-->
             <div class="card">
                 <div class="p-1 card-header bg-success">
-                    <h2 class="m-0 p-0"> Questions</h2>
+                    <h2 class="m-0 p-0 text-white"> Questions</h2>
                 </div>
                 <div class="card-body">
                     <form method="POST">

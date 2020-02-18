@@ -28,7 +28,7 @@
         <nav class="navbar navbar-dark bg-dark rounded">
             <a class="navbar-brand" href="#">
                 <img src="img/icon.jpg" height="60px" class="d-inline-block align-center bg-white rounded" alt="Logo">
-                Survey Completed !
+                Survey Closed !
             </a>
         </nav>
         <!-- NAV END -->
@@ -37,7 +37,7 @@
             <!-- form start-->
             <div class="card">
                 <div class="p-1 card-header bg-success">
-                    <h2 class="m-0 p-0 text-white"> Thank you for completing our Survey</h2>
+                    <h2 class="m-0 p-0 text-white"> Thank you the time to complete the survey has expired</h2>
                 </div>
                 <div class="card-body">
 
