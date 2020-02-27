@@ -38,16 +38,27 @@
             <div class="card">
                 <div class="p-1 card-header bg-success">
                     <h2 class="m-0 p-0 text-white"> Thank you for Creating a Survey</h2>
-                    <p>your link is :
-                        <?php
-                            $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."?id=".$_GET['id']; 
-                        ?>
-                        <a href="<?php echo $url ;?>">
-                            <?php echo $url ;?>
-                        </a>
-                    </p>
                 </div>
                 <div class="card-body">
+                    <?php
+                        $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."?id=".$_GET['id']; 
+                    ?>
+                    <!-- HTML Link -->
+                    <p>Open your survey link on the web: <br>
+                        <span class="badge p-2 m-2" style="background-color: lightgray;">
+                            <a href="<?php echo $url ;?>">
+                                <?php echo $url ;?>
+                            </a>
+                        </span>
+                    </p>
+                    <p> email your survey link: <br>
+                        <span class="badge p-2 m-2" style="background-color: lightgray;">
+                            <a href="mailto:?subject=Please complete the customer survey below&body=<?php echo $url;?>">
+                                [Open Email]
+                            </a>
+                        </span>
+                    </p>
+
 
                 </div>
             </div>
@@ -63,6 +74,7 @@
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <!-- end of Bootstrap JS -->
+
 
 </body>
 
