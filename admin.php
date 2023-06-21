@@ -5,10 +5,10 @@ $User = $_SERVER['AUTH_USER'];
 $sql = 'SELECT * from [tSurveyAdmins]
         WHERE SurveyAdminUserName = :User;';
 $sqlargs = array('User' => $User);
-require_once 'config/db_query.php'; 
-$UserAdmin =  sqlQuery($sql,$sqlargs);
+require_once 'config/db_query.php';
+$UserAdmin =  sqlQuery($sql, $sqlargs);
 
-if($UserAdmin[1] < 1 ){
+if ($UserAdmin[1] < 1) {
     echo "Please contact Petra In-house Software support for access !";
     die;
 };
@@ -39,11 +39,11 @@ if($UserAdmin[1] < 1 ){
 
 <body class="bg-primary">
     <?php
-        $sql = 'SELECT * from [CustomerSurveys].[dbo].[tSurveyMain]
+    $sql = 'SELECT * from [CustomerSurveys].[dbo].[tSurveyMain]
                 WHERE OwnerUserName = :User;';
-        $sqlargs = array('User'=>$User);
-        require_once 'config/db_query.php'; 
-        $SurveyTb =  sqlQuery($sql,$sqlargs);
+    $sqlargs = array('User' => $User);
+    require_once 'config/db_query.php';
+    $SurveyTb =  sqlQuery($sql, $sqlargs);
     ?>
 
     <!-- Page Start -->
@@ -68,42 +68,39 @@ if($UserAdmin[1] < 1 ){
                     <form method="GET" action="admin_new.php">
                         <?php
                         foreach ($SurveyTb[0] as $Rec) {
-                            if($Rec['ActiveIndicator']== -1){
+                            if ($Rec['ActiveIndicator'] == -1) {
                                 $active = "Active";
                                 $status = "bg-success text-white";
-                            }else{
+                            } else {
                                 $active = "Deactivated";
                                 $status = "bg-secondary text-white";
                             }
 
                         ?>
-                        <!-- Survey Start -->
-                        <div class="form-row">
-                            <div class="form-group col-md-8">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text <?php echo $status?>"><?php echo $active; ?></div>
+                            <!-- Survey Start -->
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text <?php echo $status ?>"><?php echo $active; ?></div>
+                                        </div>
+                                        <input type=" text" class="form-control" id="inlineFormInputGroup" value="<?php echo $Rec['SurveyName']; ?>" readonly>
                                     </div>
-                                    <input type=" text" class="form-control" id="inlineFormInputGroup"
-                                        value="<?php echo $Rec['SurveyName'] ;?>" readonly>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <a class="form-control btn btn-info" href="admin_questions.php?sid=<?php echo $Rec['Survey_id']; ?>">
+                                        Questions
+                                    </a>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <a class="form-control btn btn-primary" href="admin_action.php?sid=<?php echo $Rec['Survey_id']; ?>">
+                                        Toggle
+                                    </a>
                                 </div>
                             </div>
-                            <div class="form-group col-md-2">
-                                <a class="form-control btn btn-info"
-                                    href="admin_questions.php?sid=<?php echo $Rec['Survey_id'] ;?>">
-                                    Questions
-                                </a>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <a class="form-control btn btn-primary"
-                                    href="admin_action.php?sid=<?php echo $Rec['Survey_id'] ;?>">
-                                    Toggle
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Survey End -->
+                            <!-- Survey End -->
                         <?php
-                            }
+                        }
                         ?>
                         <hr>
                         <div class="row my-3">
@@ -123,7 +120,7 @@ if($UserAdmin[1] < 1 ){
     <!-- Page End -->
 
     <!-- Start of Bootstrap JS -->
-    <script src="js/jquery-3.3.1.slim.min.js"></script>
+    <script src="jquery-3.5.0.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <!-- end of Bootstrap JS -->

@@ -1,11 +1,11 @@
 <?php
-if( isset($_POST['Question'])){
-$UserHash = md5($_SERVER['AUTH_USER']);
-$User= $_SERVER['AUTH_USER'];
-$SurveyName = $_POST['SurveyName'];
+if (isset($_POST['Question'])) {
+    $UserHash = md5($_SERVER['AUTH_USER']);
+    $User = $_SERVER['AUTH_USER'];
+    $SurveyName = $_POST['SurveyName'];
 
-// Add survey to main
-$sql = "INSERT INTO tSurveyMain
+    // Add survey to main
+    $sql = "INSERT INTO tSurveyMain
         (SurveyName,
         ActiveIndicator,
         OwnerUserName) 
@@ -13,22 +13,22 @@ $sql = "INSERT INTO tSurveyMain
         ('$SurveyName',
         '-1',
         '$User');";
-$sqlargs = array();
-require_once 'config/db_query.php'; 
-sqlQuery($sql,$sqlargs);
+    $sqlargs = array();
+    require_once 'config/db_query.php';
+    sqlQuery($sql, $sqlargs);
 
-//get survey ID 
-$sql = "SELECT TOP(1) Survey_id from tSurveyMain
+    //get survey ID 
+    $sql = "SELECT TOP(1) Survey_id from tSurveyMain
         ORDER BY Survey_id DESC;";
-$sqlargs = array();
-require_once 'config/db_query.php'; 
-$SurveyTb = sqlQuery($sql,$sqlargs);
-$Survey_id = $SurveyTb[0][0]['Survey_id'];
+    $sqlargs = array();
+    require_once 'config/db_query.php';
+    $SurveyTb = sqlQuery($sql, $sqlargs);
+    $Survey_id = $SurveyTb[0][0]['Survey_id'];
 
-foreach ($_POST['Question'] as $key => $value) {
-    $Question = $value;
-    $Type = $_POST['Type'][$key];
-    $sql = "INSERT INTO  tSurveyQuestions
+    foreach ($_POST['Question'] as $key => $value) {
+        $Question = $value;
+        $Type = $_POST['Type'][$key];
+        $sql = "INSERT INTO  tSurveyQuestions
                 (Survey_id,
                 QuestionType_id,
                 Question,
@@ -38,11 +38,11 @@ foreach ($_POST['Question'] as $key => $value) {
                 '$Type',
                 '$Question',
                 '-1');";
-                    
+
         $sqlargs = array();
-        require_once 'config/db_query.php'; 
-        $Questions =  sqlQuery($sql,$sqlargs);
-        }
+        require_once 'config/db_query.php';
+        $Questions =  sqlQuery($sql, $sqlargs);
+    }
     echo "<script>window.location.href='admin_link.php?id=$Survey_id'</script>";
     die;
 }
@@ -54,10 +54,10 @@ $User = $_SERVER['AUTH_USER'];
 $sql = 'SELECT * from [tSurveyAdmins]
         WHERE SurveyAdminUserName = :User;';
 $sqlargs = array('User' => $User);
-require_once 'config/db_query.php'; 
-$UserAdmin =  sqlQuery($sql,$sqlargs);
+require_once 'config/db_query.php';
+$UserAdmin =  sqlQuery($sql, $sqlargs);
 
-if($UserAdmin[1] < 1 ){
+if ($UserAdmin[1] < 1) {
     echo "Please contact Petra In-house Software support for access !";
     die;
 };
@@ -88,11 +88,11 @@ if($UserAdmin[1] < 1 ){
 
 <body class="bg-primary">
     <?php
-        $sql = 'SELECT * from [tQuestionType];';
-        $sqlargs = array('');
-        require_once 'config/db_query.php'; 
-        $QType =  sqlQuery($sql,$sqlargs);
-        echo "<script> let QType = [" . json_encode($QType[0]) . "];</script>";
+    $sql = 'SELECT * from [tQuestionType];';
+    $sqlargs = array('');
+    require_once 'config/db_query.php';
+    $QType =  sqlQuery($sql, $sqlargs);
+    echo "<script> let QType = [" . json_encode($QType[0]) . "];</script>";
     ?>
     <!-- Page Start -->
     <div class="pt-1 container bg-white rounded">
@@ -118,8 +118,7 @@ if($UserAdmin[1] < 1 ){
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="SurveyName">SurveyName:</label>
-                                <input type="text" maxlength="250" class="form-control" id="SurveyName"
-                                    name="SurveyName" Placeholder="Type the survey name here" required>
+                                <input type="text" maxlength="250" class="form-control" id="SurveyName" name="SurveyName" Placeholder="Type the survey name here" required>
                             </div>
                         </div>
                         <p class="small text-danger">Question number are for visual aid only ! </p>
@@ -129,8 +128,7 @@ if($UserAdmin[1] < 1 ){
 
                         <div class="row my-3">
                             <div class="col-6">
-                                <button type="button" class="btn btn-outline-primary btn-lg form-control"
-                                    onclick="addNew();">Add
+                                <button type="button" class="btn btn-outline-primary btn-lg form-control" onclick="addNew();">Add
                                     Question</button>
                             </div>
                             <div class="col-6">
@@ -143,8 +141,7 @@ if($UserAdmin[1] < 1 ){
                                 <button type="submit" class="btn btn-outline-success btn-lg form-control">Save</button>
                             </div>
                             <div class="col-12 pt-1">
-                                <button type="button" class="btn btn-outline-secondary btn-lg form-control"
-                                    onclick="window.location.href='admin.php'">Home / Cancel</button>
+                                <button type="button" class="btn btn-outline-secondary btn-lg form-control" onclick="window.location.href='admin.php'">Home / Cancel</button>
                             </div>
                         </div>
                     </form>
@@ -158,7 +155,7 @@ if($UserAdmin[1] < 1 ){
     <!-- Page End -->
 
     <!-- Start of Bootstrap JS -->
-    <script src="js/jquery-3.3.1.slim.min.js"></script>
+    <script src="jquery-3.5.0.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <!-- end of Bootstrap JS -->
